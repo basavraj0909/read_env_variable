@@ -1,11 +1,25 @@
 import os
+import sys
+
 from dotenv import load_dotenv
 import mysql.connector
 from mysql.connector import Error
 import logging
 
-# Load environment variables from the .env file
-load_dotenv()
+
+# Load environment variables from the .env file based on the current environment
+
+# def load_environment():
+#     env = os.getenv('ENVIRONMENT', 'development')  # Default to 'development' if not set
+#     env_file = f'.env.{env}'
+#
+#     if os.path.exists(env_file):
+#         load_dotenv(env_file)
+#         logging.info(f"Loaded environment variables from {env_file}")
+#     else:
+#         raise FileNotFoundError(f"Environment file {env_file} not found")
+
+load_dotenv('.env.development')
 
 # Setup logging
 logging.basicConfig(
@@ -33,7 +47,7 @@ def connect_to_database():
         logging.info('Attempting to connect to the database...')
         connection = mysql.connector.connect(
             host=database_host,
-            port=database_port,
+            port=int(database_port),
             database=database_name,
             user=database_user,
             password=database_password
